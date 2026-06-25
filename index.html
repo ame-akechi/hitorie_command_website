@@ -71,7 +71,10 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           返回介绍
         </button>
-        <span class="nav-title">♪ <span>乐曲</span>鉴赏</span>
+        <div class="nav-tabs">
+          <span class="nav-tab nav-tab-active" onclick="switchToPage(2)">♪ <span>乐曲</span>鉴赏</span>
+          <span class="nav-tab" onclick="switchToPage(3)">▶ <span>MV</span>鉴赏</span>
+        </div>
       </div>
       <span class="nav-count" id="songCount"></span>
     </nav>
@@ -175,6 +178,52 @@
           <div class="volume-track" id="volumeTrack">
             <div class="volume-fill" id="volumeFill"></div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- 第三页：MV 鉴赏（卡片堆叠风格）                              -->
+  <!-- ============================================================ -->
+  <div id="page3" class="page page-hidden">
+    <div class="bg-gradient-dark-3" id="page3Bg" style="position:fixed;inset:0;z-index:-1;"></div>
+    <div class="float-texts"></div>
+
+    <nav class="top-nav">
+      <div class="nav-left">
+        <button class="btn-back" onclick="switchToPage(2)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          返回乐曲
+        </button>
+        <div class="nav-tabs">
+          <span class="nav-tab" onclick="switchToPage(2)">♪ 乐曲鉴赏</span>
+          <span class="nav-tab nav-tab-active" onclick="switchToPage(3)">▶ MV鉴赏</span>
+        </div>
+      </div>
+      <span class="nav-count" id="mvCount"></span>
+    </nav>
+
+    <div class="mv-wrapper">
+      <div class="card-deck" id="cardDeck"></div>
+
+      <div class="card-bottom">
+        <div class="card-controls">
+          <button class="nav-arrow" id="mvPrev" title="上一个MV">
+            <svg viewBox="0 0 24 24"><polygon points="16,4 6,12 16,20"/></svg>
+          </button>
+          <span class="card-page" id="mvIndex">1 / 6</span>
+          <button class="nav-arrow" id="mvNext" title="下一个MV">
+            <svg viewBox="0 0 24 24"><polygon points="8,4 18,12 8,20"/></svg>
+          </button>
+        </div>
+        <div class="mv-like-wrap">
+          <button class="mv-like-btn" id="mvLikeBtn" title="点赞">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="mvLikeIcon">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            <span id="mvLikeText">点赞</span>
+          </button>
         </div>
       </div>
     </div>

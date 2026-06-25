@@ -33,6 +33,22 @@
     .bg-gradient-dark-2.liked::before {
       opacity: 1;
     }
+    .bg-gradient-dark-3 {
+      background: linear-gradient(135deg, #080B24 0%, #12163A 50%, #0A0D28 100%);
+      position: relative;
+    }
+    .bg-gradient-dark-3::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0B0E2A, #3D1A4A, #6A2A6A, #C65BCD);
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      pointer-events: none;
+    }
+    .bg-gradient-dark-3.liked::before {
+      opacity: 1;
+    }
 
     /* ========== 背景装饰光晕 ========== */
     .bg-orbs {
@@ -56,6 +72,33 @@
       0%   { transform: translate(0, 0) scale(1); }
       50%  { transform: translate(30px, -40px) scale(1.1); }
       100% { transform: translate(-20px, 30px) scale(0.9); }
+    }
+
+    /* ========== 浮动字幕 ========== */
+    .float-texts {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .float-texts .ft-item {
+      position: absolute;
+      z-index: -1;
+      font-family: 'Noto Sans JP', 'Noto Sans SC', sans-serif;
+      opacity: 0.7;
+      color: rgba(255,255,255,0.6);
+      white-space: nowrap;
+      letter-spacing: 4px;
+      font-weight: 300;
+      line-height: 1.2;
+      user-select: none;
+      animation: ftDrift 22s ease-in-out infinite alternate;
+      text-shadow: 0 0 20px rgba(255,255,255,0.06), 0 0 60px rgba(91,205,198,0.04);
+    }
+    @keyframes ftDrift {
+      0%   { transform: translate(0px, 0px) rotate(0deg); }
+      50%  { transform: translate(12px, -8px) rotate(0.4deg); }
+      100% { transform: translate(-8px, 6px) rotate(-0.3deg); }
     }
 
     /* ========== 玻璃拟态 ========== */
@@ -294,7 +337,7 @@
     /* ============================================================== */
     /* 第二页布局                                                     */
     /* ============================================================== */
-    #page2 {
+    #page2, #page3 {
       min-height: 100vh;
       padding-bottom: 110px;
       display: flex;
@@ -337,6 +380,32 @@
     .top-nav .nav-title { font-size: 1.15rem; font-weight: 600; letter-spacing: 1px; }
     .top-nav .nav-title span { color: #5BCDC6; }
     .nav-count { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+
+    /* -------- 导航标签切换 -------- */
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-tab {
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      letter-spacing: 1px;
+    }
+    .nav-tab:hover {
+      color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.04);
+    }
+    .nav-tab.nav-tab-active {
+      color: #fff;
+      background: rgba(91,205,198,0.12);
+    }
+    .nav-tab.nav-tab-active span { color: #5BCDC6; }
 
     /* ============================================================== */
     /* 碟片播放器居中区域                                             */
@@ -556,6 +625,194 @@
       font-size: 0.75rem;
       color: rgba(255,255,255,0.2);
       letter-spacing: 2px;
+    }
+
+    /* ============================================================== */
+    /* 第三页：MV 鉴赏（卡片堆叠）                                    */
+    /* ============================================================== */
+    .mv-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 60px;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ---------- 卡片堆叠容器 ---------- */
+    .card-deck {
+      position: relative;
+      width: 380px;
+      height: 480px;
+      margin: 0 auto;
+    }
+
+    /* ---------- 单张卡片 ---------- */
+    .card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+    .card:hover {
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    /* 卡片背景封面 */
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.25;
+      transition: opacity 0.5s ease;
+    }
+    .card.active .card-bg {
+      opacity: 0.35;
+    }
+
+    /* 卡片歌名 */
+    .card-name {
+      position: relative;
+      z-index: 1;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-align: center;
+      padding: 20px;
+      color: #fff;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+      transition: color 0.3s ease;
+    }
+
+    /* 卡片序号角标 */
+    .card-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 2;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 1px;
+    }
+
+    /* 卡片打开链接按钮 (仅 active 卡片可见) */
+    .card-open {
+      position: relative;
+      z-index: 1;
+      margin-top: 8px;
+      padding: 8px 20px;
+      border-radius: 50px;
+      border: 1px solid rgba(91,205,198,0.3);
+      background: rgba(91,205,198,0.1);
+      color: #5BCDC6;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+    .card.active .card-open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .card-open:hover {
+      background: rgba(91,205,198,0.2);
+      box-shadow: 0 0 20px rgba(91,205,198,0.15);
+    }
+
+    /* 卡片点赞状态：边框变色 */
+    .card.liked {
+      border-color: #ff3b5c !important;
+      box-shadow:
+        0 8px 40px rgba(0,0,0,0.3),
+        0 0 30px rgba(255,59,92,0.15),
+        inset 0 0 60px rgba(255,59,92,0.03);
+    }
+    .card.liked .card-name {
+      color: #ff6b84;
+    }
+    .card.liked .card-bg {
+      opacity: 0.4;
+    }
+
+    /* ---------- 卡片底部控件 ---------- */
+    .card-bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 32px;
+      gap: 16px;
+    }
+    .card-controls {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .card-page {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 2px;
+      min-width: 60px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .mv-like-wrap {
+      display: flex;
+      justify-content: center;
+    }
+    .mv-like-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      padding: 8px 20px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .mv-like-btn:hover {
+      color: rgba(255,255,255,0.8);
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.06);
+    }
+    .mv-like-btn.liked {
+      color: #ff3b5c !important;
+      border-color: #ff3b5c !important;
+      background: rgba(255,59,92,0.08) !important;
+    }
+
+    @media (max-width: 1024px) {
+      .card-deck { width: 320px; height: 400px; }
+      .card-name { font-size: 1.2rem; }
+    }
+    @media (max-width: 768px) {
+      .card-deck { width: 270px; height: 360px; }
+      .card-name { font-size: 1rem; }
+      .mv-wrapper { padding: 24px 16px; }
     }
 
     /* ---------- 歌词提示 ---------- */
